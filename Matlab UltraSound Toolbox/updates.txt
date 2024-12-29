@@ -1,0 +1,220 @@
+**  2020-06-09  **
+- MUST is online
+
+**  2020-06-10  **
+- MUSTstat: Another IP website has been added  (minor)
+- this file "updates.txt" has been added
+
+** 2020-06-11 **
+- TXDELAY: the "plane wave" option for a convex array has been added  (potentially useful)
+- IMPOLGRID: The 1st z-values of the grid have been modified  (minor)
+
+** 2020-06-12 **
+- PFIELD: The persistent variable pfieldToday was removed  (minor)
+- PFIELD: RPmono = sum(DIR.*EXP,3) => RPmono = sum(DIR.*EXP,3)/M  (not very important)
+- SIMUS: license('checkout','Distrib_Computing_Toolbox') => license('test','Distrib_Computing_Toolbox')  (may avoid an annoying warning message)
+- PFIELD, SIMUS, MKMOVIE: BSC has been replaced by RC everywhere. The term "backscattering coefficient" was physically incorrect. It has been replaced by "reflection coefficient"  (minor)
+
+** 2020-06-22 **
+- SIMUS: A conflict existed between ParPool and AdMessage (fixed)
+- PFIELD: isNEAR has been modified (not very important)
+- SPTRACK and BMODE are now part of the MUST toolbox
+
+** 2020-06-24 **
+- IQ2DOPPLER: a scalar M returned [M 1] in the code (instead of [M M]). Fixed.
+
+** 2020-08-02 **
+- PFIELD: The pressure field is now proportional to ElementWidth to be consistent with the theory. This is a multiplicative factor (not very important).
+
+** 2020-09-02 **
+- DASMTX: an error appeared when the delay vector contained a single finite element. Fixed.
+
+** 2020-09-19 **
+- GETPARAM: now returns structures with fields "focus" and "height
+- PFIELD: isNEAR has been modified, isOUT has been added (not very important)
+- PFIELD: numerical instabilities are better controlled
+
+** 2020-09-19 **
+- DASMTX: PARAM.elements has been added (upon F. Varray's request) as a hidden optional field.
+
+** 2020-12-20 **
+- GETPULSE has been added in the MUST toolbox.
+
+** 2021-01-05 **
+MAJOR UPDATES on PFIELD and SIMUS (MUST version #2)
+- An elevation focusing can now be included (3-D acoustic wave equations).
+- PARAM.TXdelay no longer available for PFIELD and SIMUS.
+- There was a bug in the two-way pulse. I don't know why... Fixed.
+- The variable isNEAR no longer exists in the code.
+- The PFIELD code has been significantly modified. The theory has been double-checked while writing the theoretical paper that was submitted in 2021.
+
+** 2021-01-09 **
+- PFIELD: The max(X,[],'all') have been replaced by max(X(:))
+
+** 2021-01-14 **
+- SIMUS: The very small RF values are zeroed (with a smooth transition)
+
+** 2021-01-15 **
+- PFIELD: Some coefficients of the multi-Gaussian beam model were wrong! The default case (n=3) was OK.
+- n = 6 (from Wen1988) has been removed (it was incorrect!)
+- n = 5 has been fixed (it was incorrect!)
+- n = 1,2,3,4 have been fine-tuned (not important)
+- The default is now n = 4
+
+** 2021-01-29 **
+- SPTRACK: The max(X,[],'all') have been replaced by max(X(:))
+- idem with any(X,'all')
+
+** 2021-08-12 **
+- LVscat.mat: BSC has been replaced by RC (error in the variable name)
+
+** 2021-09-10 **
+- PFIELD: There was an error when param.TXnow = Inf: the line { if isinf(T), T = 1e6; end } has been added (line 716)
+- SIMUS: maxD was infinite if param.TXnow = Inf. Fixed
+
+** 2021-09-14 **
+- DASMTX: A minor error occured when the field TXdelay of PARAM was not properly written. 'TXdelay' has been added in the fieldLIST cell in the function IgnoreCaseInFieldNames.
+
+** 2022-03-30 **
+- IMPOLGRID: For a linear array, the z-coordinate of the Origo is now 0 (for information, the old value is in comment). This choice is "more compatible" with focused strategies used in echocardiography.
+
+** 2022-03-31 **
+- LVscat.mat: The variable BSC has been renamed RC.
+
+** 2022-04-07 **
+- PFIELD: I removed the lines: IDX = cumsum(IDX,'reverse') & cumsum(IDX); f = f(IDX);
+And replaced them by:
+f = f(find(IDX,1):find(IDX,1,'last'));
+
+** 2022-04-14 **
+- PFIELD: I made another mistake! Here is the correct syntax:
+IDX = IDX(find(IDX,1):find(IDX,1,'last'));
+f = f(IDX);
+Note (see ** 2023-04-27 **): I was wrong!...
+
+** 2022-05-03 **
+- GENSCAT: I replaced: raylrnd(1,1,length(xs))'
+by: hypot(rand(length(xs),1),rand(length(xs),1))
+since the raylrnd function needs the Statistics and Machine Learning Toolbox
+
+** 2022-05-06 **
+- DASMTX: An error occurred when the delays were in single precision. Fixed.
+
+** 2022-05-10 **
+- GENSCAT: I added a random reordering of the xs, ys, zs.
+
+** 2022-05-14 **
+- SIMUS: I replaced "nf = param.fs/2/param.fc*(Nf-1);" by "nf = ceil(param.fs/2/param.fc*(Nf-1));".
+Thank you Thurston B!
+
+** 2022-10-07 **
+- TXDELAY: The tilt angles were not defined in the trigonometric direction. Thank you Jorgen (Avdal)! I fixed this major issue and updated the examples of the website and user guide.
+
+** 2022-10-18 **
+- PFIELD: I added some input tests for PARAM.kerf, PARAM.width, and PARAM.pitch. Not important.
+
+** 2022-10-20 **
+- TXDELAY: Some minor modifications in the test and help texts. Not important.
+
+** 2022-10-30 **
+- SIMUS and PFIELD: Some minor modifications in the test and help texts. Not important.
+
+** 2022-11-13 **
+- PFIELD: The SPECT output parameter was incorrectly arranged. Fixed by SPECT = reshape(SPECT.',[siz0 nSampling]);
+
+** 2022-12-06 **
+- GETPARAM: two Vermon matrix arrays have been added in the list.
+Thank you François V!
+
+** 2022-12-06 **
+New functions are available (for simulation of planar matrix arrays). Not yet online (only @CREATIS)
+- TXDELAY3
+- PFIELD3
+- SIMUS3
+- DASMTX3 (by François Varray, from DASMTX)
+
+** 2022-12-19 **
+- SIMUS: I modified the maximal distance (maxD); I added the length of the pulse.
+
+** 2023-01-08 **
+MAJOR UPDATES (MUST version #3)
+- MUST includes six new functions, including five for 3-D ultrasound imaging:
+DAS3, DASMTX3, PFIELD3, SIMUS3, TXDELAY3
+- It also includes VIEWXDCR to view your transducer
+
+** 2023-01-09 **
+- PFIELD3: Large 1/r values occurred in the very near field. Fixed.
+- PFIELD : Such problems were already considered in PFIELD. However, I slightly modified the small r values to make it consistent with PFIELD3.
+
+** 2023-01-20 **
+- VIEWXDCR: I added a syntax: VIEWXDCR(PARAM,UNIT).
+- GENSCAT: I replaced: raylrnd(1,1,length(xs))'
+by: hypot(rand(length(xs),1),rand(length(xs),1))
+since the raylrnd function needs the Statistics and Machine Learning Toolbox
+(there was another one that I missed, see 2022-05-03)
+
+** 2023-03-01 **
+- DAS and DAS3: data are chunked to avoid tall DAS matrices.
+
+** 2023-04-20 **
+- RF2IQ: there was a mistake when estimating the carrier frequency
+
+** 2023-04-24 **
+PFIELD, PFIELD3, GETPULSE:
+The frequencies are now shifted such that the center frequency for a pulse-echo is exactly PARAM.fc
+(now removed, see ** 2023-11-08 **)
+
+** 2023-04-27 **
+- PFIELD and PFIELD3:
+IDX = IDX(find(IDX,1):find(IDX,1,'last')); was not correct (see ** 2022-04-07 **).
+I replaced it by:
+IDX(find(IDX,1):find(IDX,1,'last')) = true;
+Thank you Gabriel Bernardino!
+
+** 2023-05-12 **
+-WFILT:
+I added error messages in case the degree N is too large.
+
+** 2023-06-12 **
+- BMODE
+I added the following syntax: bmode(IQ,Gamma)
+
+** 2023-07-07 **
+I've changed my mind
+- IMPOLGRID: I've changed my mind (see ** 2022-03-30 **).  Back to the previous version (line 120).
+
+** 2023-10-20 **
+- PFIELD: MUSTstat becomes MUSTstat(p), with p = fileparts(mfilename('fullpath'));
+- MUSTstat: MUSTstat.mat is now created in the MUST toolbox folder.
+
+** 2023-11-08 **
+I removed the modifications done in 2023-04-24
+- PFIELD, PFIELD3, GETPULSE:
+The frequencies are NO LONGER shifted. It was not a good idea when compounding data...
+Thank you François Varray!
+
+** 2023-12-11 **
+- DAS and DASMTX:
+An option has been added: you can enter the location of the virtual source as an input parameter.
+This syntax is recommended for focused waves (it was not correct before...) 
+
+** 2024-01-18 **
+- PFIELD and PFIELD3:
+The function "checkUpdate" checks whether the MUST toolbox is not out-of-date.
+- CITE:
+The paper "Think twice before f-numbering" has been added
+
+** 2024-02-07 **
+- DASMTX:
+Hidden syntax: if PARAM.mean is true, weights have been added to consider the length of the apertures (with an f-number). They are equal to 1/subaperture_length:
+W = nc./sum(Iaperture,2);
+W(~isfinite(W)) = 1;
+
+** 2024-05-28 **
+- TXDELAY:
+Diverging (circular) waves are now possible with convex arrays
+
+** 2024-06-17 **
+- DASMTX:
+Major Modifications!
+The transmit distances are now calculated by estimating a virtual transducer. They are equal to the smallest distances bewteen the virtual transducer and the scatterers (= lengths of the segments perpendicular to the virtual transducer).
